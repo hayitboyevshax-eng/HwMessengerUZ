@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 public class ThemeColors {
 
-    public static final int TELEGRAM_COLOR = 0xFF229AF0;        // -14509328
-    public static final int TELEGRAM_COLOR_TEXT = 0xFF298ACF;   // -14054705
+    public static final int TELEGRAM_COLOR = 0xFF1E6BFF;        // -14509328
+    public static final int TELEGRAM_COLOR_TEXT = 0xFF2F7BFF;   // -14054705
     public static final int DEFAULT_BLACK_TEXT = 0xFF1A1D21;   // -15065823
 
     private static SparseArray<String> colorKeysMap;
@@ -270,7 +270,7 @@ public class ThemeColors {
         defaultColors[key_chats_menuPhone] = 0xffffffff;
         defaultColors[key_chats_menuPhoneCats] = 0xffc2e5ff;
         defaultColors[key_chats_actionIcon] = 0xffffffff;
-        defaultColors[key_chats_actionBackground] = 0xff65a9e0;
+        defaultColors[key_chats_actionBackground] = 0xff1E6BFF;
         defaultColors[key_chats_actionPressedBackground] = 0xff569dd6;
         defaultColors[key_chats_menuTopBackgroundCats] = 0xff598fba;
         defaultColors[key_chats_archivePullDownBackground] = 0xffc6c9cc;
@@ -637,8 +637,8 @@ public class ThemeColors {
         defaultColors[key_featuredStickers_addedIcon] = TELEGRAM_COLOR;
         defaultColors[key_featuredStickers_buttonProgress] = 0xffffffff;
         defaultColors[key_featuredStickers_addButton] = TELEGRAM_COLOR;
-        defaultColors[key_featuredStickers_addButton2] = 0xFF56baf0;
-        defaultColors[key_featuredStickers_addButtonPressed] = 0xff2288d1;
+        defaultColors[key_featuredStickers_addButton2] = 0xFF22D3FF;
+        defaultColors[key_featuredStickers_addButtonPressed] = 0xff1757D6;
         defaultColors[key_featuredStickers_removeButtonText] = 0xff5093d3;
         defaultColors[key_featuredStickers_buttonText] = 0xffffffff;
         defaultColors[key_featuredStickers_unread] = 0xff4da6ea;

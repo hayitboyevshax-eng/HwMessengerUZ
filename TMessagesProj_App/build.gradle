@@ -78,7 +78,7 @@ android {
             shrinkResources false
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), '../TMessagesProj/proguard-rules.pro'
-            ndk.debugSymbolLevel = 'FULL'
+            ndk.debugSymbolLevel = 'NONE'
         }
 
         standalone {
@@ -90,7 +90,7 @@ android {
             shrinkResources true
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), '../TMessagesProj/proguard-rules.pro'
-            ndk.debugSymbolLevel = 'FULL'
+            ndk.debugSymbolLevel = 'NONE'
         }
 
         release {
@@ -101,7 +101,7 @@ android {
             shrinkResources true
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), '../TMessagesProj/proguard-rules.pro'
-            ndk.debugSymbolLevel = 'FULL'
+            ndk.debugSymbolLevel = 'NONE'
         }
     }
 
@@ -117,12 +117,24 @@ android {
         manifest.srcFile '../TMessagesProj/config/release/AndroidManifest.xml'
     }
 
+    // HwMessenger: har bir ABI uchun alohida APK (universal APK yo'q)
+    splits {
+        abi {
+            enable true
+            reset()
+            include "armeabi-v7a", "arm64-v8a"
+            universalApk false
+        }
+    }
+
     flavorDimensions "minApi"
 
     productFlavors {
         bundleAfat {
-            ndk {
-                abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            externalNativeBuild {
+                cmake {
+                    abiFilters "armeabi-v7a", "arm64-v8a"
+                }
             }
             ext {
                 abiVersionCode = 1
@@ -130,8 +142,10 @@ android {
             buildConfigField "boolean", "BUNDLE", "true"
         }
         afat {
-            ndk {
-                abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            externalNativeBuild {
+                cmake {
+                    abiFilters "armeabi-v7a", "arm64-v8a"
+                }
             }
             sourceSets.debug {
                 manifest.srcFile '../TMessagesProj/config/debug/AndroidManifest_SDK23.xml'
@@ -153,8 +167,11 @@ android {
 
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            outputFileName = "app.apk"
-            output.versionCodeOverride = defaultConfig.versionCode * 10 + variant.productFlavors.get(0).abiVersionCode
+            def abi = output.getFilter("ABI")
+            def abiCodes = ["armeabi-v7a": 1, "arm64-v8a": 2]
+            def abiCode = abi != null ? abiCodes.get(abi, 0) : variant.productFlavors.get(0).abiVersionCode
+            outputFileName = abi != null ? "HwMessenger-${APP_VERSION_NAME}-${abi}.apk" : "app.apk"
+            output.versionCodeOverride = defaultConfig.versionCode * 10 + abiCode
         }
     }
 
