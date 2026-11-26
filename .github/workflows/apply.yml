@@ -1,0 +1,20 @@
+name: Apply overlay
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          rm -rf /tmp/ov && mkdir /tmp/ov
+          unzip -q HwMessenger*.zip -d /tmp/ov
+          SRC=$(find /tmp/ov -maxdepth 2 -name gradle.properties -printf '%h\n' | head -1)
+          rsync -a --exclude='.github' "$SRC"/ ./
+          rm -f HwMessenger*.zip
+          git config user.name hw-bot
+          git config user.email hw-bot@users.noreply.github.com
+          git add -A
+          git commit -m "Apply HwMessenger overlay"
+          git push
